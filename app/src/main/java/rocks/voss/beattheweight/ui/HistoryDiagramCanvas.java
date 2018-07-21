@@ -28,7 +28,7 @@ public class HistoryDiagramCanvas extends SurfaceView {
 
         Paint background = new Paint();
         background.setColor(Color.BLACK);
-        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), background );
+        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), background);
     }
 }
 

@@ -1,7 +1,5 @@
 package rocks.voss.beattheweight.utils;
 
-import android.util.Log;
-
 import java.util.List;
 
 import lombok.Getter;
@@ -27,7 +25,7 @@ public class DatabaseUtil {
         return weightDatabase.getDao();
     }
 
-    public static void insertAll(Weight ... weights) {
+    public static void insertAll(Weight... weights) {
         Thread thread = new Thread() {
             @Override
             public void run() {
