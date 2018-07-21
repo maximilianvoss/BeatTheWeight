@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
 
         WeightsCache.getAll().forEach(weight -> {
             TextView textView = new TextView(this);
-            String text = weight.time.format(DateTimeFormatter.ISO_DATE_TIME) + ": " + weight.weight;
+            String text = weight.time.format(DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm")) + ": " + weight.weight;
             textView.setText(text);
             weightList.addView(textView);
         });
