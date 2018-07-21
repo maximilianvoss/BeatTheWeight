@@ -1,20 +1,19 @@
 package rocks.voss.beattheweight.activities;
 
 import android.arch.persistence.room.Room;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.List;
+import org.threeten.bp.format.DateTimeFormatter;
 
 import rocks.voss.beattheweight.R;
-import rocks.voss.beattheweight.data.WeightsCache;
 import rocks.voss.beattheweight.database.Weight;
 import rocks.voss.beattheweight.database.WeightDatabase;
+import rocks.voss.beattheweight.database.WeightsCache;
 import rocks.voss.beattheweight.utils.DatabaseUtil;
 import rocks.voss.beattheweight.utils.TimeUtil;
 import rocks.voss.beattheweight.utils.ToastUtil;
@@ -44,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
 
         WeightsCache.getAll().forEach(weight -> {
             TextView textView = new TextView(this);
-            textView.setText(String.valueOf(weight.weight));
+            String text = weight.time.format(DateTimeFormatter.ISO_DATE_TIME) + ": " + weight.weight;
+            textView.setText(text);
             weightList.addView(textView);
         });
     }
@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
 
         WeightsCache.insertWeight(weightObj);
 
-        ToastUtil.createLongToast(this, "Saved the weight");
+        ToastUtil.createLongToast(this, "Saved your weight");
         updateWeightList();
     }
 }

@@ -1,6 +1,5 @@
 package rocks.voss.beattheweight.activities;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -27,7 +26,7 @@ public class WeightEntryDialog extends DialogFragment {
         try {
             mListener = (WeightEntryCallback) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement NoticeDialogListener");
+            throw new ClassCastException(context.toString() + " must implement WeightEntryCallback");
         }
     }
 

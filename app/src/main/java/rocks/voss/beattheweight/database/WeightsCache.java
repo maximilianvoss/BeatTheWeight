@@ -1,11 +1,8 @@
-package rocks.voss.beattheweight.data;
-
-import android.util.Log;
+package rocks.voss.beattheweight.database;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import rocks.voss.beattheweight.database.Weight;
 import rocks.voss.beattheweight.utils.DatabaseUtil;
 
 public class WeightsCache {
