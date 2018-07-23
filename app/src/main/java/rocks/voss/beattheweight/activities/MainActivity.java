@@ -6,7 +6,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import org.threeten.bp.format.DateTimeFormatter;
 
@@ -14,6 +13,7 @@ import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.Weight;
 import rocks.voss.beattheweight.database.WeightDatabase;
 import rocks.voss.beattheweight.database.WeightsCache;
+import rocks.voss.beattheweight.ui.WeekContainer;
 import rocks.voss.beattheweight.utils.DatabaseUtil;
 import rocks.voss.beattheweight.utils.TimeUtil;
 import rocks.voss.beattheweight.utils.ToastUtil;
@@ -41,12 +41,22 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
         LinearLayout weightList = findViewById(R.id.weightList);
         weightList.removeAllViews();
 
-        WeightsCache.getAll().forEach(weight -> {
-            TextView textView = new TextView(this);
-            String text = weight.time.format(DateTimeFormatter.ofPattern("dd.MM.YYYY HH:mm")) + ": " + weight.weight;
-            textView.setText(text);
-            weightList.addView(textView);
-        });
+        DateTimeFormatter formatterWeek = DateTimeFormatter.ofPattern("w");
+
+        WeekContainer weekContainer = null;
+        int currentWeek;
+        int oldWeek = -1;
+
+        for (Weight weight : WeightsCache.getAll()) {
+            currentWeek = Integer.parseInt(weight.time.format(formatterWeek));
+            if (currentWeek != oldWeek) {
+                oldWeek = currentWeek;
+                weekContainer = new WeekContainer(this);
+                weekContainer.setWeek(currentWeek);
+                weightList.addView(weekContainer);
+            }
+            weekContainer.addWeight(weight);
+        }
     }
 
     public void saveNewWeight(float weight) {
