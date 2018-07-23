@@ -112,7 +112,7 @@ play {
     uploadImages = true
 }
 
-task gittag() {
+task gittag(dependsOn: ':gitchangelog') {
     outputs.upToDateWhen { false }
     inputs.file(rootProject.file('version.properties'))
 
@@ -139,6 +139,8 @@ task gittag() {
 
 task gitchangelog() {
     outputs.upToDateWhen { false }
+    inputs.file(rootProject.file('version.properties'))
+
     def runTasks = gradle.startParameter.taskNames
     if ('assembleRelease' in runTasks) {
         exec {
