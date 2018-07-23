@@ -128,7 +128,7 @@ task gittag() {
         }
         exec {
             workingDir rootProject.getRootDir()
-            commandLine 'git', 'tag', mVersionName
+            commandLine 'git', 'tag', "-a", mVersionName, "-m", mVersionName
         }
         exec {
             workingDir rootProject.getRootDir()
