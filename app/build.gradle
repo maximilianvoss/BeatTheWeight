@@ -124,7 +124,7 @@ task gittag() {
         }
         exec {
             workingDir rootProject.getRootDir()
-            commandLine 'git', 'commit', '-m', '"release build"'
+            commandLine 'git', 'commit', '-m', 'release build'
         }
         exec {
             workingDir rootProject.getRootDir()
@@ -145,7 +145,7 @@ task gitchangelog() {
     if ('assembleRelease' in runTasks) {
         exec {
             workingDir rootProject.getRootDir()
-            commandLine "bash", "-c", "git log --pretty=format:\"- %s\" --since=\"\$(git show -s --format=%ad `git rev-list --tags --max-count=2 | tail -1`)\" | sed 's/- \"release build\"//' | sed '/^[[:space:]]*\$/d' >${rootProject.getRootDir()}/app/src/main/play/en-US/whatsnew"
+            commandLine "bash", "-c", "git log --pretty=format:\"- %s\" `git for-each-ref --sort=taggerdate --format '%(refname)' refs/tags | tail -2 | head -1 | sed 's/refs\\/tags\\///'`..`git for-each-ref --sort=taggerdate --format '%(refname)' refs/tags | tail -1 | sed 's/refs\\/tags\\///'` >${rootProject.getRootDir()}/app/src/main/play/en-US/whatsnew"
         }
     }
 }
