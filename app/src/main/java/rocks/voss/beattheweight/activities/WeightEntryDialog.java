@@ -40,7 +40,10 @@ public class WeightEntryDialog extends DialogFragment {
         View customView = inflater.inflate(R.layout.dialog_addweight, null);
 
         DoubleNumberPicker doubleNumberPicker = customView.findViewById(R.id.doublepicker);
-        doubleNumberPicker.setValue(WeightsCache.getAll().get(0).weight);
+
+        if (WeightsCache.getAll().size() > 0) {
+            doubleNumberPicker.setValue(WeightsCache.getAll().get(0).weight);
+        }
         builder.setView(customView);
 
         builder.setPositiveButton("OK", (dialog, which) -> {
