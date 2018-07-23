@@ -145,7 +145,7 @@ task gitchangelog() {
     if ('assembleRelease' in runTasks) {
         exec {
             workingDir rootProject.getRootDir()
-            commandLine "bash", "-c", "git log --pretty=format:\"- %s\" --since=\"\$(git show -s --format=%ad `git rev-list --tags --max-count=2 | tail -1`)\" | sed 's/- \"release build\"//' >${rootProject.getRootDir()}/app/src/main/play/en-US/whatsnew"
+            commandLine "bash", "-c", "git log --pretty=format:\"- %s\" --since=\"\$(git show -s --format=%ad `git rev-list --tags --max-count=2 | tail -1`)\" | sed 's/- \"release build\"//' | sed '/^[[:space:]]*\$/d' >${rootProject.getRootDir()}/app/src/main/play/en-US/whatsnew"
         }
     }
 }
