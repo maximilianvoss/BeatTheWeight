@@ -8,9 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
 
 import rocks.voss.beattheweight.R;
+import rocks.voss.beattheweight.database.WeightsCache;
+import rocks.voss.beattheweight.ui.DoubleNumberPicker;
 
 public class WeightEntryDialog extends DialogFragment {
 
@@ -37,12 +38,14 @@ public class WeightEntryDialog extends DialogFragment {
 
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View customView = inflater.inflate(R.layout.dialog_addweight, null);
-        EditText newWeight = customView.findViewById(R.id.newWeight);
+
+        DoubleNumberPicker doubleNumberPicker = customView.findViewById(R.id.doublepicker);
+        doubleNumberPicker.setValue(WeightsCache.getAll().get(0).weight);
         builder.setView(customView);
 
         builder.setPositiveButton("OK", (dialog, which) -> {
-            Log.i(this.getClass().toString(), newWeight.getText().toString());
-            mListener.saveNewWeight(Float.valueOf(newWeight.getText().toString()));
+            Log.i(this.getClass().toString(), String.valueOf(doubleNumberPicker.getValue()));
+            mListener.saveNewWeight(doubleNumberPicker.getValue());
             dialog.dismiss();
         });
 

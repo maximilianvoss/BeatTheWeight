@@ -1,5 +1,7 @@
 package rocks.voss.beattheweight.utils;
 
+import android.util.Log;
+
 import java.util.List;
 
 import lombok.Getter;
@@ -49,7 +51,7 @@ public class DatabaseUtil {
         try {
             thread.join();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Log.e("rocks.voss.beattheweight.utils.DatabaseUtil", "InterruptedException", e);
         }
     }
 }

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Beat The Weight</string>
+    <string name="local_separator">,</string>
+    <string name="measure_unit_sign">kg</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="DoubleNumberPicker">
+        <attr name="min_value" />
+        <attr name="max_value" />
+        <attr name="default_value" />
+        <attr name="decimals" />
+    </declare-styleable>
+</resources>
