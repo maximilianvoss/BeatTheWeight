@@ -1,7 +1,9 @@
 package rocks.voss.beattheweight.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -11,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Setter;
+import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.Weight;
 
 public class WeekContainer extends LinearLayout {
-    private List<Weight> weights = new ArrayList<>(7);
-    private TextView headline;
+    final private List<Weight> weights = new ArrayList<>(7);
 
     @Setter
     private int week = 0;
@@ -34,16 +36,16 @@ public class WeekContainer extends LinearLayout {
 
     public WeekContainer(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
-        this.setOrientation(VERTICAL);
-
-        headline = new TextView(context);
-        this.addView(headline);
     }
 
     public void addWeight(Weight weight) {
         weights.add(weight);
+
+        TextView headline = findViewById(R.id.headline);
         headline.setText("Week: " + week + ": " + calcAvg());
-        TextView textView = new TextView(getContext());
+
+        LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
+        TextView textView = (TextView) inflater.inflate(R.layout.widget_weight, null);
         String text = weight.time.format(DateTimeFormatter.ofPattern("dd.MM.YYYY")) + ": " + weight.weight + " kg";
         textView.setText(text);
         addView(textView);

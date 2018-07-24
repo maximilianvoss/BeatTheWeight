@@ -4,6 +4,7 @@ import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -43,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
 
         DateTimeFormatter formatterWeek = DateTimeFormatter.ofPattern("w");
 
+        LayoutInflater inflater = getLayoutInflater();
+
         WeekContainer weekContainer = null;
         int currentWeek;
         int oldWeek = -1;
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
             currentWeek = Integer.parseInt(weight.time.format(formatterWeek));
             if (currentWeek != oldWeek) {
                 oldWeek = currentWeek;
-                weekContainer = new WeekContainer(this);
+                weekContainer = (WeekContainer) inflater.inflate(R.layout.widget_weekcontainer, null);
                 weekContainer.setWeek(currentWeek);
                 weightList.addView(weekContainer);
             }
