@@ -27,6 +27,11 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
 
         DatabaseUtil.openDatabase(getApplicationContext());
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_beattheweight);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setTitle("  " + getSupportActionBar().getTitle());
 
         FloatingActionButton addWeightButton = findViewById(R.id.addWeightButton);
         addWeightButton.setOnClickListener((View v) -> {
