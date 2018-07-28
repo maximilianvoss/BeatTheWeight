@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 public class BigDecimalConverter {
     @TypeConverter
     public BigDecimal fromLong(Long value) {
-        return value == null ? null : new BigDecimal(value).divide(new BigDecimal(10));
+        return value == null ? null : new BigDecimal(value).divide(new BigDecimal(10)).setScale(1);
     }
 
     @TypeConverter
