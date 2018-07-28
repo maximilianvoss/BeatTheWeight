@@ -9,12 +9,12 @@
         android:id="@+id/headline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@color/accent_material_dark"
         android:paddingBottom="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingTop="20dp"
-        android:textColor="#FF00FF"
+        android:textColor="#FFFFFF"
         android:textSize="20dp" />
 
 </rocks.voss.beattheweight.ui.WeekContainer>
