@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="24dp"
+        app:backgroundTint="#FFFFFF"
         app:srcCompat="@android:drawable/ic_input_add" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
