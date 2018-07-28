@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import java.math.BigDecimal;
+
 import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.WeightsCache;
 import rocks.voss.beattheweight.ui.DoubleNumberPicker;
@@ -18,7 +20,7 @@ public class WeightEntryDialog extends DialogFragment {
     private WeightEntryCallback mListener;
 
     public interface WeightEntryCallback {
-        void saveNewWeight(float weight);
+        void saveNewWeight(BigDecimal weight);
     }
 
     @Override
@@ -58,6 +60,4 @@ public class WeightEntryDialog extends DialogFragment {
 
         return builder.create();
     }
-
-
 }

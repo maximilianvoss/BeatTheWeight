@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,13 +54,13 @@ public class WeekContainer extends LinearLayout {
     }
 
     private String calcAvg() {
-        float avg = 0f;
+        BigDecimal avg = new BigDecimal(0);
+
         for (Weight weight : weights) {
-            avg += weight.weight;
+            avg = avg.add(weight.weight);
         }
-        avg /= weights.size();
-        avg += 0.05;
-        return String.format("%.1f", avg);
+        avg = avg.divide(new BigDecimal(weights.size()), 1, RoundingMode.HALF_UP);
+        return String.format("%.1f", avg.floatValue());
     }
 }
 

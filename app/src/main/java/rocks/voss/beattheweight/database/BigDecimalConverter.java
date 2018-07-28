@@ -2,14 +2,20 @@ package rocks.voss.beattheweight.database;
 
 import android.arch.persistence.room.TypeConverter;
 
-public class DecimalConverter {
+import java.math.BigDecimal;
+
+public class BigDecimalConverter {
     @TypeConverter
-    public static DecimalType toDecimalType(String value) {
-        return DecimalType.createByString(value);
+    public BigDecimal fromLong(Long value) {
+        return value == null ? null : new BigDecimal(value).divide(new BigDecimal(10));
     }
 
     @TypeConverter
-    public static String fromDecimalType(DecimalType date) {
-        return date.toString();
+    public Long toLong(BigDecimal bigDecimal) {
+        if (bigDecimal == null) {
+            return null;
+        } else {
+            return bigDecimal.multiply(new BigDecimal(10)).longValue();
+        }
     }
 }

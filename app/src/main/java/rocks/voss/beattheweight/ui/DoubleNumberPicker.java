@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
+import java.math.BigDecimal;
+
 import lombok.Getter;
 import rocks.voss.beattheweight.R;
 
@@ -88,12 +90,17 @@ public class DoubleNumberPicker extends LinearLayout {
         fractionPicker.setMinValue(0);
     }
 
-    public float getValue() {
-        return (float) (integerPicker.getValue() + fractionPicker.getValue() / Math.pow(10, decimals));
+    public BigDecimal getValue() {
+        return BigDecimal.valueOf((long) (integerPicker.getValue() * Math.pow(10, decimals) + fractionPicker.getValue()), decimals);
     }
 
     public void setValue(float value) {
         integerPicker.setValue((int) value);
         fractionPicker.setValue((int) ((value - (int) value) * Math.pow(10, decimals)));
+    }
+
+    public void setValue(BigDecimal bigDecimal) {
+        integerPicker.setValue(bigDecimal.intValue());
+        fractionPicker.setValue(bigDecimal.subtract(new BigDecimal(bigDecimal.intValue())).multiply(new BigDecimal(Math.pow(10, decimals))).intValue());
     }
 }

@@ -9,7 +9,7 @@ import android.arch.persistence.room.TypeConverters;
  */
 
 @Database(entities = {Weight.class}, version = 1)
-@TypeConverters({TimeConverter.class})
+@TypeConverters({TimeConverter.class, BigDecimalConverter.class})
 public abstract class WeightDatabase extends RoomDatabase {
     public abstract WeightDao getDao();
 }

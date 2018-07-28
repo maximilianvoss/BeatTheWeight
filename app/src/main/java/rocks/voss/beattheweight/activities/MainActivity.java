@@ -1,6 +1,5 @@
 package rocks.voss.beattheweight.activities;
 
-import android.arch.persistence.room.Room;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +9,10 @@ import android.widget.LinearLayout;
 
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.math.BigDecimal;
+
 import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.Weight;
-import rocks.voss.beattheweight.database.WeightDatabase;
 import rocks.voss.beattheweight.database.WeightsCache;
 import rocks.voss.beattheweight.ui.WeekContainer;
 import rocks.voss.beattheweight.utils.DatabaseUtil;
@@ -25,8 +25,7 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DatabaseUtil.setWeightDatabase(Room.databaseBuilder(getApplicationContext(), WeightDatabase.class, "Weights").build());
-
+        DatabaseUtil.openDatabase(getApplicationContext());
         setContentView(R.layout.activity_main);
 
         FloatingActionButton addWeightButton = findViewById(R.id.addWeightButton);
@@ -62,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
         }
     }
 
-    public void saveNewWeight(float weight) {
+    public void saveNewWeight(BigDecimal weight) {
         Weight weightObj = new Weight();
         weightObj.time = TimeUtil.getNow();
         weightObj.weight = weight;

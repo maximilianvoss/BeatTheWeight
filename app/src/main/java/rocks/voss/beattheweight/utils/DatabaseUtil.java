@@ -1,11 +1,14 @@
 package rocks.voss.beattheweight.utils;
 
+import android.arch.persistence.room.Room;
+import android.content.Context;
 import android.util.Log;
 
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
+import rocks.voss.beattheweight.Constants;
 import rocks.voss.beattheweight.database.Weight;
 import rocks.voss.beattheweight.database.WeightDao;
 import rocks.voss.beattheweight.database.WeightDatabase;
@@ -15,9 +18,12 @@ public class DatabaseUtil {
     @Getter
     private static WeightDatabase weightDatabase;
 
-
     public interface GetAllCallback {
         void onResultReady(List<Weight> weights);
+    }
+
+    public static void openDatabase(Context context) {
+        setWeightDatabase(Room.databaseBuilder(context, WeightDatabase.class, Constants.DATABASE_NAME).build());
     }
 
     public static WeightDao getWeightDao() {
