@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import lombok.Setter;
 import rocks.voss.beattheweight.R;
@@ -44,7 +45,7 @@ public class WeekContainer extends LinearLayout {
         weights.add(weight);
 
         TextView headline = findViewById(R.id.headline);
-        headline.setText("Week: " + week + ": " + calcAvg());
+        headline.setText("Week " + week + ": " + calcAvg() + " kg");
 
         LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
         TextView textView = (TextView) inflater.inflate(R.layout.widget_weight, null);
@@ -60,7 +61,7 @@ public class WeekContainer extends LinearLayout {
             avg = avg.add(weight.weight);
         }
         avg = avg.divide(new BigDecimal(weights.size()), 1, RoundingMode.HALF_UP);
-        return String.format("%.1f", avg.floatValue());
+        return String.format(Locale.US, "%.1f", avg.floatValue());
     }
 }
 
