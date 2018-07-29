@@ -61,7 +61,19 @@ public class HistoryDiagramCanvas extends SurfaceView {
         onDrawLast7Days(canvas);
     }
 
-    public void onDrawLast7Days(Canvas canvas) {
+    private void onDrawLast7Days(Canvas canvas) {
+        OffsetDateTime time = TimeUtil.getNow();
+        time = time.minusDays(7);
+        onDrawHistory(canvas, time);
+    }
+
+    private void onDrawLast30Days(Canvas canvas) {
+        OffsetDateTime time = TimeUtil.getNow();
+        time = time.minusDays(30);
+        onDrawHistory(canvas, time);
+    }
+
+    private void onDrawHistory(Canvas canvas, OffsetDateTime time) {
         Paint line = new Paint();
         line.setStyle(Paint.Style.STROKE);
         line.setColor(Color.WHITE);
@@ -69,9 +81,6 @@ public class HistoryDiagramCanvas extends SurfaceView {
 
         Path path = new Path();
         path.moveTo(padding, padding);
-
-        OffsetDateTime time = TimeUtil.getNow();
-        time = time.minusDays(7);
 
         DatabaseUtil.getAll(time, weights -> {
             weights.sort(new Weight.WeightComperator());
@@ -97,10 +106,6 @@ public class HistoryDiagramCanvas extends SurfaceView {
             }
             canvas.drawPath(path, line);
         });
-    }
-
-    public void onDrawLast30Days(Canvas canvas) {
-
     }
 }
 
