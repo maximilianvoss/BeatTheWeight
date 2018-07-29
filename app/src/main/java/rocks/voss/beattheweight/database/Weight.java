@@ -5,6 +5,7 @@ import android.arch.persistence.room.Index;
 import android.support.annotation.NonNull;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 
 /**
  * Created by voss on 08.04.18.
@@ -30,5 +31,20 @@ public class Weight {
             return true;
         }
         return false;
+    }
+
+
+    public static class TimeComperator implements Comparator<Weight> {
+        @Override
+        public int compare(Weight o1, Weight o2) {
+            return o1.time.compareTo(o2.time);
+        }
+    }
+
+    public static class WeightComperator implements Comparator<Weight> {
+        @Override
+        public int compare(Weight o1, Weight o2) {
+            return o1.weight.compareTo(o2.weight);
+        }
     }
 }

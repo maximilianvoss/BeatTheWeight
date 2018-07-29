@@ -4,6 +4,8 @@ import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.util.Log;
 
+import org.threeten.bp.OffsetDateTime;
+
 import java.util.List;
 
 import lombok.Getter;
@@ -50,6 +52,23 @@ public class DatabaseUtil {
             public void run() {
                 super.run();
                 List<Weight> result = getWeightDao().getAll();
+                callback.onResultReady(result);
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            Log.e("rocks.voss.beattheweight.utils.DatabaseUtil", "InterruptedException", e);
+        }
+    }
+
+    public static void getAll(OffsetDateTime time, GetAllCallback callback) {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                List<Weight> result = getWeightDao().getAll(time);
                 callback.onResultReady(result);
             }
         };
