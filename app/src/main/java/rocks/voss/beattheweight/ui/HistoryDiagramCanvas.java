@@ -23,6 +23,7 @@ public class HistoryDiagramCanvas extends SurfaceView {
 
     private float padding;
     private Paint background = new Paint();
+    private int daysInHistory;
 
     public HistoryDiagramCanvas(Context context) {
         this(context, null);
@@ -42,6 +43,7 @@ public class HistoryDiagramCanvas extends SurfaceView {
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.HistoryDiagramCanvas, defStyleAttr, defStyleRes);
         padding = a.getDimension(R.styleable.HistoryDiagramCanvas_padding, 10f);
+        daysInHistory = a.getInt(R.styleable.HistoryDiagramCanvas_days_in_chart, 7);
         background.setColor(Color.parseColor("#FF303030"));
         a.recycle();
 
@@ -58,22 +60,6 @@ public class HistoryDiagramCanvas extends SurfaceView {
         frame.setColor(Color.BLACK);
         canvas.drawRect(padding, padding, canvas.getWidth() - padding, canvas.getHeight() - padding, frame);
 
-        onDrawLast7Days(canvas);
-    }
-
-    private void onDrawLast7Days(Canvas canvas) {
-        OffsetDateTime time = TimeUtil.getNow();
-        time = time.minusDays(7);
-        onDrawHistory(canvas, time);
-    }
-
-    private void onDrawLast30Days(Canvas canvas) {
-        OffsetDateTime time = TimeUtil.getNow();
-        time = time.minusDays(30);
-        onDrawHistory(canvas, time);
-    }
-
-    private void onDrawHistory(Canvas canvas, OffsetDateTime time) {
         Paint line = new Paint();
         line.setStyle(Paint.Style.STROKE);
         line.setColor(Color.WHITE);
@@ -81,6 +67,9 @@ public class HistoryDiagramCanvas extends SurfaceView {
 
         Path path = new Path();
         path.moveTo(padding, padding);
+
+        OffsetDateTime time = TimeUtil.getNow();
+        time = time.minusDays(daysInHistory);
 
         DatabaseUtil.getAll(time, weights -> {
             weights.sort(new Weight.WeightComperator());

@@ -9,5 +9,6 @@
 
     <declare-styleable name="HistoryDiagramCanvas">
         <attr name="padding" format="dimension" />
+        <attr name="days_in_chart" format="integer" />
     </declare-styleable>
 </resources>

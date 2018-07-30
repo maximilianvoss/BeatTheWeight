@@ -22,9 +22,10 @@
         tools:context=".activities.MainActivity">
 
         <rocks.voss.beattheweight.ui.HistoryDiagramCanvas
-            android:layout_width="match_parent"
             android:id="@+id/historyDiagram"
+            android:layout_width="match_parent"
             android:layout_height="200dp"
+            app:days_in_chart="10"
             app:padding="20dp" />
 
         <ScrollView
@@ -34,8 +35,7 @@
                 android:id="@+id/weightList"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:orientation="vertical" />
         </ScrollView>
 
     </LinearLayout>

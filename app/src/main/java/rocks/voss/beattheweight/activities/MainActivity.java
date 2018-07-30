@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.Weight;
 import rocks.voss.beattheweight.database.WeightsCache;
+import rocks.voss.beattheweight.ui.HistoryDiagramCanvas;
 import rocks.voss.beattheweight.ui.WeekContainer;
 import rocks.voss.beattheweight.utils.DatabaseUtil;
 import rocks.voss.beattheweight.utils.TimeUtil;
@@ -75,5 +76,8 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
 
         ToastUtil.createLongToast(this, "Saved your weight");
         updateWeightList();
+
+        HistoryDiagramCanvas historyDiagramCanvas = findViewById(R.id.historyDiagram);
+        historyDiagramCanvas.invalidate();
     }
 }
