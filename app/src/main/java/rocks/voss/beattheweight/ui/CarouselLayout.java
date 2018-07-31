@@ -69,6 +69,7 @@ public class CarouselLayout extends LinearLayout {
                         active = getChildCount() - 1;
                     }
                 }
+                updateSlide();
                 invalidate();
                 return true;
             }
@@ -78,7 +79,6 @@ public class CarouselLayout extends LinearLayout {
     @Override
     public void onDraw(Canvas canvas) {
         drawIndicator(canvas);
-        updateSlide();
     }
 
     @Override
