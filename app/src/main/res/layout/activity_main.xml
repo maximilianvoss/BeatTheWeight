@@ -21,16 +21,32 @@
         android:orientation="vertical"
         tools:context=".activities.MainActivity">
 
-        <rocks.voss.beattheweight.ui.HistoryDiagramCanvas
-            android:id="@+id/historyDiagram"
-            android:layout_width="match_parent"
+        <rocks.voss.beattheweight.ui.CarouselLayout
+            android:layout_width="fill_parent"
             android:layout_height="200dp"
-            app:days_in_chart="10"
-            app:padding="20dp" />
+            android:orientation="horizontal"
+            android:paddingBottom="15dp">
+
+            <rocks.voss.beattheweight.ui.HistoryDiagramCanvas
+                android:id="@+id/historyDiagram"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:days_in_chart="7"
+                app:padding="20dp" />
+
+            <rocks.voss.beattheweight.ui.HistoryDiagramCanvas
+                android:id="@+id/historyDiagram1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:days_in_chart="30"
+                app:padding="20dp" />
+        </rocks.voss.beattheweight.ui.CarouselLayout>
 
         <ScrollView
+            android:paddingTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:id="@+id/weightList"
                 android:layout_width="match_parent"
