@@ -21,7 +21,7 @@
         android:orientation="vertical"
         tools:context=".activities.MainActivity">
 
-        <rocks.voss.beattheweight.ui.CarouselLayout
+        <rocks.voss.androidutils.ui.CarouselLayout
             android:layout_width="fill_parent"
             android:layout_height="200dp"
             android:orientation="horizontal"
@@ -40,7 +40,7 @@
                 android:layout_height="match_parent"
                 app:days_in_chart="30"
                 app:padding="20dp" />
-        </rocks.voss.beattheweight.ui.CarouselLayout>
+        </rocks.voss.androidutils.ui.CarouselLayout>
 
         <ScrollView
             android:paddingTop="15dp"
