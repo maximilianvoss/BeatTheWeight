@@ -98,7 +98,7 @@ dependencies {
     implementation 'com.android.support:support-compat:27.1.1'
     implementation 'android.arch.persistence.room:runtime:1.1.0'
     implementation 'org.threeten:threetenbp:1.3.6'
-    implementation 'rocks.voss.androidutils:rocks.voss.androidutils:0.0.18-SNAPSHOT@aar'
+    implementation 'rocks.voss.androidutils:rocks.voss.androidutils:0.0.18@aar'
 }
 
 play {
