@@ -4,11 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <rocks.voss.beattheweight.ui.DoubleNumberPicker
+    <rocks.voss.androidutils.ui.DoubleNumberPicker
         android:id="@+id/doublepicker"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        app:separator=","
+        app:unit="kg"
         app:decimals="1"
         app:default_value="75.0"
         app:max_value="200"

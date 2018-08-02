@@ -11,9 +11,9 @@ import android.view.View;
 
 import java.math.BigDecimal;
 
+import rocks.voss.androidutils.ui.DoubleNumberPicker;
 import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.WeightsCache;
-import rocks.voss.beattheweight.ui.DoubleNumberPicker;
 
 public class WeightEntryDialog extends DialogFragment {
 
