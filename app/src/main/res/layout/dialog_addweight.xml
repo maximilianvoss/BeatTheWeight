@@ -14,6 +14,7 @@
         app:decimals="1"
         app:default_value="75.0"
         app:max_value="200"
+        app:auto_integer_update="true"
         app:min_value="25" />
 
 </android.support.design.widget.CoordinatorLayout>
