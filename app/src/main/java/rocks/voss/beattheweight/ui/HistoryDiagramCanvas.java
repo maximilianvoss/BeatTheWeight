@@ -19,6 +19,8 @@ import rocks.voss.beattheweight.database.Weight;
 import rocks.voss.beattheweight.utils.DatabaseUtil;
 import rocks.voss.beattheweight.utils.TimeUtil;
 
+import static org.threeten.bp.temporal.ChronoUnit.DAYS;
+
 public class HistoryDiagramCanvas extends SurfaceView {
 
     private float padding;
@@ -68,9 +70,7 @@ public class HistoryDiagramCanvas extends SurfaceView {
         Path path = new Path();
         path.moveTo(padding, padding);
 
-        OffsetDateTime time = TimeUtil.getNow();
-        time = time.minusDays(daysInHistory);
-
+        OffsetDateTime time = TimeUtil.getNow().minusDays(daysInHistory);
         DatabaseUtil.getAll(time, weights -> {
             weights.sort(new Weight.WeightComperator());
 
@@ -78,19 +78,21 @@ public class HistoryDiagramCanvas extends SurfaceView {
             BigDecimal maximum = weights.get(weights.size() - 1).weight;
 
             float fractionKilos = (canvas.getHeight() - 2 * padding) / maximum.subtract(minimum).floatValue();
-            float fractionDays = (canvas.getWidth() - 2 * padding) / (weights.size() - 1);
+            float fractionDays = (canvas.getWidth() - 2 * padding) / daysInHistory;
 
             weights.sort(new Weight.TimeComperator());
 
             for (int i = 0; i < weights.size(); i++) {
                 Weight weight = weights.get(i);
+                long daysDiff = DAYS.between(time, weight.time);
 
                 BigDecimal overMinimum = weight.weight.subtract(minimum);
 
                 if (i == 0) {
                     path.moveTo(padding, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
+                    path.lineTo(padding + fractionDays * daysDiff, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
                 } else {
-                    path.lineTo(padding + fractionDays * i, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
+                    path.lineTo(padding + fractionDays * daysDiff, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
                 }
             }
             canvas.drawPath(path, line);
