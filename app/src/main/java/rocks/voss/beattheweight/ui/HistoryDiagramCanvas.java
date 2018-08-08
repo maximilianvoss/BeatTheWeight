@@ -74,28 +74,30 @@ public class HistoryDiagramCanvas extends SurfaceView {
         DatabaseUtil.getAll(time, weights -> {
             weights.sort(new Weight.WeightComperator());
 
-            BigDecimal minimum = weights.get(0).weight;
-            BigDecimal maximum = weights.get(weights.size() - 1).weight;
+            if (weights.size() > 0) {
+                BigDecimal minimum = weights.get(0).weight;
+                BigDecimal maximum = weights.get(weights.size() - 1).weight;
 
-            float fractionKilos = (canvas.getHeight() - 2 * padding) / maximum.subtract(minimum).floatValue();
-            float fractionDays = (canvas.getWidth() - 2 * padding) / daysInHistory;
+                float fractionKilos = (canvas.getHeight() - 2 * padding) / maximum.subtract(minimum).floatValue();
+                float fractionDays = (canvas.getWidth() - 2 * padding) / daysInHistory;
 
-            weights.sort(new Weight.TimeComperator());
+                weights.sort(new Weight.TimeComperator());
 
-            for (int i = 0; i < weights.size(); i++) {
-                Weight weight = weights.get(i);
-                long daysDiff = DAYS.between(time, weight.time);
+                for (int i = 0; i < weights.size(); i++) {
+                    Weight weight = weights.get(i);
+                    long daysDiff = DAYS.between(time, weight.time);
 
-                BigDecimal overMinimum = weight.weight.subtract(minimum);
+                    BigDecimal overMinimum = weight.weight.subtract(minimum);
 
-                if (i == 0) {
-                    path.moveTo(padding, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
-                    path.lineTo(padding + fractionDays * daysDiff, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
-                } else {
-                    path.lineTo(padding + fractionDays * daysDiff, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
+                    if (i == 0) {
+                        path.moveTo(padding, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
+                        path.lineTo(padding + fractionDays * daysDiff, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
+                    } else {
+                        path.lineTo(padding + fractionDays * daysDiff, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
+                    }
                 }
+                canvas.drawPath(path, line);
             }
-            canvas.drawPath(path, line);
         });
     }
 }
