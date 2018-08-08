@@ -45,7 +45,7 @@ public class WeekContainer extends LinearLayout {
         weights.add(weight);
 
         TextView headline = findViewById(R.id.headline);
-        headline.setText("Week " + week + ": " + calcAvg() + " kg");
+        headline.setText("Week " + week + ": " + String.format(Locale.US, "%.1f", calcAvg().floatValue()) + " kg");
 
         LayoutInflater inflater = ((Activity) getContext()).getLayoutInflater();
         TextView textView = (TextView) inflater.inflate(R.layout.widget_weight, null);
@@ -54,14 +54,14 @@ public class WeekContainer extends LinearLayout {
         addView(textView);
     }
 
-    private String calcAvg() {
+    private BigDecimal calcAvg() {
         BigDecimal avg = new BigDecimal(0);
 
         for (Weight weight : weights) {
             avg = avg.add(weight.weight);
         }
         avg = avg.divide(new BigDecimal(weights.size()), 1, RoundingMode.HALF_UP);
-        return String.format(Locale.US, "%.1f", avg.floatValue());
+        return avg;
     }
 }
 
