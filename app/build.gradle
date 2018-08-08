@@ -96,9 +96,11 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:support-compat:27.1.1'
+    implementation 'com.google.android.gms:play-services-drive:15.0.1'
+    implementation 'com.google.android.gms:play-services-auth:15.0.1'
     implementation 'android.arch.persistence.room:runtime:1.1.0'
     implementation 'org.threeten:threetenbp:1.3.6'
-    implementation 'rocks.voss.androidutils:rocks.voss.androidutils:0.0.19@aar'
+    implementation 'rocks.voss.androidutils:rocks.voss.androidutils:0.0.20@aar'
 }
 
 play {

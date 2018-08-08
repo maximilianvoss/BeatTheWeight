@@ -1,16 +1,26 @@
 package rocks.voss.beattheweight.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import org.threeten.bp.format.DateTimeFormatter;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
+import rocks.voss.androidutils.AndroidUtilsConstants;
+import rocks.voss.androidutils.activities.ExportGoogleDriveActivity;
+import rocks.voss.androidutils.database.ExportData;
+import rocks.voss.androidutils.database.ExportDataSet;
 import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.Weight;
 import rocks.voss.beattheweight.database.WeightsCache;
@@ -41,6 +51,37 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
         });
 
         updateWeightList();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.mainmenu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+        switch (item.getItemId()) {
+            case R.id.upload:
+                intent = new Intent(this, ExportGoogleDriveActivity.class);
+
+                ExportData exportData = new ExportData();
+
+                List<String> headers = new ArrayList<>(2);
+                headers.add("Time");
+                headers.add("Weight");
+                exportData.setHeader(headers);
+                exportData.setDataSets((List<ExportDataSet>) (List<?>) WeightsCache.getAll());
+
+                intent.putExtra(AndroidUtilsConstants.EXPORT_GOOGLE_DRIVE_ACTIVITY_EXPORT_DATA, exportData);
+                intent.putExtra(AndroidUtilsConstants.EXPORT_GOOGLE_DRIVE_ACTIVITY_EXPORT_FILE_NAME, "weight-%1$s.csv");
+                startActivity(intent);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void updateWeightList() {
