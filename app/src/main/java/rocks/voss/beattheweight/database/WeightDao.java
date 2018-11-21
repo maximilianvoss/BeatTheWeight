@@ -21,5 +21,5 @@ public interface WeightDao {
     List<Weight> getAll();
 
     @Insert
-    void insertAll(Weight... weights);
+    void insert(Weight weights);
 }

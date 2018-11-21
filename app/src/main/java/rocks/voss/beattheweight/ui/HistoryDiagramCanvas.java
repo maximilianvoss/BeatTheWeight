@@ -13,10 +13,11 @@ import android.view.SurfaceView;
 import org.threeten.bp.OffsetDateTime;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import rocks.voss.androidutils.utils.DatabaseUtil;
 import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.Weight;
-import rocks.voss.beattheweight.utils.DatabaseUtil;
 import rocks.voss.beattheweight.utils.TimeUtil;
 
 import static org.threeten.bp.temporal.ChronoUnit.DAYS;
@@ -26,6 +27,7 @@ public class HistoryDiagramCanvas extends SurfaceView {
     private float padding;
     private Paint background = new Paint();
     private int daysInHistory;
+    private DatabaseUtil databaseUtil = new DatabaseUtil();
 
     public HistoryDiagramCanvas(Context context) {
         this(context, null);
@@ -71,8 +73,8 @@ public class HistoryDiagramCanvas extends SurfaceView {
         path.moveTo(padding, padding);
 
         OffsetDateTime time = TimeUtil.getNow().minusDays(daysInHistory);
-        DatabaseUtil.getAll(time, weights -> {
-            weights.sort(new Weight.WeightComperator());
+        databaseUtil.getAll(Weight.class, time, weightsList -> {
+            List<Weight> weights = (List<Weight>) (List<?>) weightsList;
 
             if (weights.size() > 0) {
                 BigDecimal minimum = weights.get(0).weight;

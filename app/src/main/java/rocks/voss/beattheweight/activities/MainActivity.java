@@ -21,12 +21,14 @@ import rocks.voss.androidutils.AndroidUtilsConstants;
 import rocks.voss.androidutils.activities.ExportGoogleDriveActivity;
 import rocks.voss.androidutils.database.ExportData;
 import rocks.voss.androidutils.database.ExportDataSet;
+import rocks.voss.androidutils.utils.DatabaseUtil;
+import rocks.voss.beattheweight.Constants;
 import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.Weight;
+import rocks.voss.beattheweight.database.WeightDatabase;
 import rocks.voss.beattheweight.database.WeightsCache;
 import rocks.voss.beattheweight.ui.HistoryDiagramCanvas;
 import rocks.voss.beattheweight.ui.WeekContainer;
-import rocks.voss.beattheweight.utils.DatabaseUtil;
 import rocks.voss.beattheweight.utils.TimeUtil;
 import rocks.voss.beattheweight.utils.ToastUtil;
 
@@ -36,7 +38,8 @@ public class MainActivity extends AppCompatActivity implements WeightEntryDialog
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        DatabaseUtil.openDatabase(getApplicationContext());
+        DatabaseUtil databaseUtil = new DatabaseUtil();
+        databaseUtil.openDatabase(getApplicationContext(), WeightDatabase.class, Constants.DATABASE_NAME);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_beattheweight);
