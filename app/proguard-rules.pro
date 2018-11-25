@@ -22,4 +22,5 @@
 
 -dontwarn android.support.v7.**
 -keep class android.support.v7.app.AppCompatViewInflater{ <init>(...); }
--keep public class * implements WeightDao { * ;}
+-keepnames public class * implements WeightDao
+-keep public class * implements WeightDao { *; }
