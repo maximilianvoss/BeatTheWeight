@@ -25,5 +25,5 @@
 
 -keepclassmembers class * implements WeightDao {
     public List<Weight> getAll();
-    void insert(Weight weights);
+    public void insert(Weight weights);
 }
