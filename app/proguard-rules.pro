@@ -23,7 +23,6 @@
 -dontwarn android.support.v7.**
 -keep class android.support.v7.app.AppCompatViewInflater{ <init>(...); }
 
--keepclassmembers class * implements WeightDao {
-    public List<Weight> getAll();
-    public void insert(Weight weights);
+-keepclassmembers public class * implements rocks.voss.beattheweight.database.WeightDao {
+    *;
 }
