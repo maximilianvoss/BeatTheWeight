@@ -8,6 +8,10 @@ import rocks.voss.androidutils.utils.DatabaseUtil;
 public class WeightsCache {
     private static List<Weight> weights = null;
 
+    public static void getAll(GetAllCallback callback) {
+        callback.onResultReady(getAll());
+    }
+
     public static List<Weight> getAll() {
         DatabaseUtil databaseUtil = new DatabaseUtil();
         if (weights == null) {
@@ -23,5 +27,9 @@ public class WeightsCache {
         DatabaseUtil databaseUtil = new DatabaseUtil();
         weights.add(0, weight);
         databaseUtil.insert(Weight.class, weight);
+    }
+
+    public interface GetAllCallback {
+        void onResultReady(List<Weight> elements);
     }
 }

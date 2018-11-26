@@ -13,11 +13,10 @@ import android.view.SurfaceView;
 import org.threeten.bp.OffsetDateTime;
 
 import java.math.BigDecimal;
-import java.util.List;
 
-import rocks.voss.androidutils.utils.DatabaseUtil;
 import rocks.voss.beattheweight.R;
 import rocks.voss.beattheweight.database.Weight;
+import rocks.voss.beattheweight.database.WeightsCache;
 import rocks.voss.beattheweight.utils.TimeUtil;
 
 import static org.threeten.bp.temporal.ChronoUnit.DAYS;
@@ -27,7 +26,6 @@ public class HistoryDiagramCanvas extends SurfaceView {
     private float padding;
     private Paint background = new Paint();
     private int daysInHistory;
-    private DatabaseUtil databaseUtil = new DatabaseUtil();
 
     public HistoryDiagramCanvas(Context context) {
         this(context, null);
@@ -73,10 +71,10 @@ public class HistoryDiagramCanvas extends SurfaceView {
         path.moveTo(padding, padding);
 
         OffsetDateTime time = TimeUtil.getNow().minusDays(daysInHistory);
-        databaseUtil.getAll(Weight.class, time, weightsList -> {
-            List<Weight> weights = (List<Weight>) (List<?>) weightsList;
-
+        WeightsCache.getAll(weights -> {
             if (weights.size() > 0) {
+                weights.sort(new Weight.WeightComperator());
+
                 BigDecimal minimum = weights.get(0).weight;
                 BigDecimal maximum = weights.get(weights.size() - 1).weight;
 
@@ -85,18 +83,23 @@ public class HistoryDiagramCanvas extends SurfaceView {
 
                 weights.sort(new Weight.TimeComperator());
 
-                for (int i = 0; i < weights.size(); i++) {
-                    Weight weight = weights.get(i);
-                    long daysDiff = DAYS.between(time, weight.time);
-
-                    BigDecimal overMinimum = weight.weight.subtract(minimum);
-
-                    if (i == 0) {
-                        path.moveTo(padding, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
-                        path.lineTo(padding + fractionDays * daysDiff, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
-                    } else {
-                        path.lineTo(padding + fractionDays * daysDiff, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
+                int listStart = 0;
+                for (int i = weights.size() - 1; i >= 0; i--) {
+                    long daysDiff = DAYS.between(weights.get(i).time, time);
+                    if (daysDiff > 0) {
+                        listStart = i;
+                        break;
                     }
+                }
+                weights = weights.subList(listStart + 1, weights.size());
+
+                BigDecimal overMinimum = weights.get(0).weight.subtract(minimum);
+                path.moveTo(padding, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
+
+                for (Weight weight : weights) {
+                    long daysDiff = DAYS.between(time, weight.time) + 1;
+                    overMinimum = weight.weight.subtract(minimum);
+                    path.lineTo(padding + fractionDays * daysDiff, canvas.getHeight() - padding - fractionKilos * overMinimum.floatValue());
                 }
                 canvas.drawPath(path, line);
             }
